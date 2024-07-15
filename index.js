@@ -6,43 +6,43 @@ let serviceSlidersData = [
     heading: "web Developer",
     description:
       "Hello we are the best web developers in the world contact us.",
-    image: "../Assets/serviceImages/1.png",
+    image: "Assets/serviceImages/1.png",
   },
   {
     heading: "software Developer",
     description:
       "Hello we are the best web developers in the world contact us.",
-    image: "../Assets/serviceImages/2.png",
+    image: "Assets/serviceImages/2.png",
   },
   {
     heading: "Python developer",
     description:
       "Hello we are the best web developers in the world contact us.",
-    image: "../Assets/serviceImages/3.png",
+    image: "Assets/serviceImages/3.png",
   },
   {
     heading: "Mobile app developer",
     description:
       "Hello we are the best web developers in the world contact us.",
-    image: "../Assets/serviceImages/4.png",
+    image: "Assets/serviceImages/4.png",
   },
   {
     heading: "Software Testing",
     description:
       "Hello we are the best web developers in the world contact us.",
-    image: "../Assets/serviceImages/5.png",
+    image: "Assets/serviceImages/5.png",
   },
   {
     heading: "Search engine optimization",
     description:
       "Hello we are the best web developers in the world contact us.",
-    image: "../Assets/serviceImages/6.jpg",
+    image: "Assets/serviceImages/6.jpg",
   },
   {
     heading: "Search engine optimization",
     description:
       "Hello we are the best web developers in the world contact us.",
-    image: "../Assets/serviceImages/3.png",
+    image: "Assets/serviceImages/3.png",
   },
 ];
 
