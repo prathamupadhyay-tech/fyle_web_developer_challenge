@@ -73,17 +73,16 @@ function populate(container, template, array) {
   });
 }
 
-
 let fontSize = window.getComputedStyle(container).fontSize;
 let fontSizeInPixels = parseFloat(fontSize);
 let slides = document.querySelectorAll(".service_imgs");
 let additionalWidth = 2 * fontSizeInPixels;
-let skipSlides = 2;
-let slideWidthGlobal =clientWidth + additionalWidth;
+let slideWidthGlobal = clientWidth + additionalWidth;
 let dotButtons = document.querySelectorAll(".slider_dot_btns");
 let dotBtnsIndex = 0;
 let intervalId;
 let timeoutId;
+let isAutoScrolling = false;
 
 // Function to update the selected dot and scroll position
 function updateCarousel(index) {
@@ -93,9 +92,10 @@ function updateCarousel(index) {
   dotBtnsIndex = index;
   dotButtons[index].classList.add("selected");
 
+  isAutoScrolling = true; // Set the flag to true before scrolling
+
   if (dotBtnsIndex === dotButtons.length - 1) {
     // Scroll to the very end of the container
-    console.log(dotBtnsIndex);
     innerContainer.scrollTo({
       left: innerContainer.scrollWidth - innerContainer.clientWidth,
       behavior: "smooth",
@@ -107,42 +107,75 @@ function updateCarousel(index) {
       behavior: "smooth",
     });
   }
+
+  setTimeout(() => {
+    isAutoScrolling = false; // Reset the flag after the scroll completes
+  }, 500); // Adjust the timeout duration as needed
 }
 
 // Function to start the automatic scrolling interval
 function startInterval() {
   intervalId = setInterval(() => {
-    if (dotBtnsIndex == dotButtons.length - 1) {
+    if (dotBtnsIndex === dotButtons.length - 1) {
       dotBtnsIndex = -1;
     }
     updateCarousel(dotBtnsIndex + 1);
   }, 2500);
 }
 
+// Function to handle manual scrolling
+function handleScroll() {
+  if (!isAutoScrolling) { 
+    const scrollLeft = innerContainer.scrollLeft;
+    let index = Math.round(scrollLeft / slideWidthGlobal);
+    if (index >= dotButtons.length) {
+      index = dotButtons.length - 1;
+    }
+    if (index !== dotBtnsIndex) {
+      updateCarousel(index);
+    }
+  }
+}
+
 // Add event listeners to dot buttons
 dotButtons.forEach((element, index) => {
   element.addEventListener("click", () => {
-    // Update the carousel
+   
     updateCarousel(index);
 
-    // Clear the existing interval and timeout
+  
     clearInterval(intervalId);
     clearTimeout(timeoutId);
 
-    // Restart the interval after a delay (e.g., 5 seconds)
     timeoutId = setTimeout(() => {
       startInterval();
-    }, 3000); // 5000 milliseconds = 5 seconds
+    }, 2000); 
   });
+});
+
+
+innerContainer.addEventListener("scroll", () => {
+  // Clear the existing interval and timeout
+  clearInterval(intervalId);
+  clearTimeout(timeoutId);
+
+  handleScroll();
+
+ 
+  timeoutId = setTimeout(() => {
+    startInterval();
+  }, 2000); 
 });
 
 // Initial start of the interval
 startInterval();
+
+// Restart interval on window resize
 window.addEventListener("resize", () => {
   clearInterval(intervalId);
-
   startInterval();
 });
+
 
 const productDescriptionBoxes = document.querySelectorAll(
   ".project_description_div"
